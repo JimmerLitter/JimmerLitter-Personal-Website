@@ -1,0 +1,47 @@
+baseURL = "https://jimmerlitter.com/"
+title = "James Huang"
+theme = "PaperMod"
+locale = "en-us"
+enableRobotsTXT = true
+
+[params]
+  defaultTheme = "auto"
+  showReadingTime = true
+  showWordCount = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = false
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowFullTextinRSS = true
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/YOUR_GITHUB_USERNAME"
+
+  [[params.socialIcons]]
+    name = "linkedin"
+    url = "https://linkedin.com/in/YOUR_LINKEDIN_USERNAME"
+
+[menu]
+  [[menu.main]]
+    identifier = "blog"
+    name = "Blog"
+    url = "/posts/"
+    weight = 10
+
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 20
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = false
+  [markup.highlight]
+    noClasses = false
