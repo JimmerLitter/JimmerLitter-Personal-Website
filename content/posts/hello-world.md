@@ -1,7 +1,7 @@
 ---
 title: "Hello, World"
 date: 2026-07-07
-draft: true
+draft: false
 tags: ["meta"]
 categories: ["blog"]
 description: "A first post — what this blog is and where it's headed."

@@ -1,19 +1,18 @@
 ---
 title: "About"
 date: 2026-07-07
-layout: "about"
 url: "/about/"
 summary: about
 ---
 
 Hi, I'm **James Huang**.
 
-<!-- Add a sentence or two about yourself here -->
+<!-- I love to fuck Julien's ass -->
 
 ## Background
 
-<!-- Where you're from, what you do, what you're interested in -->
+<!-- Im from LA, studying EE at ucsd, love robotics -->
 
 ## Contact
 
-Find me on [GitHub](https://github.com/YOUR_GITHUB_USERNAME) or [LinkedIn](https://linkedin.com/in/YOUR_LINKEDIN_USERNAME).
+Find me on [GitHub](https://github.com/JimmerLitter) or [LinkedIn](https://www.linkedin.com/in/jameshuanger/).

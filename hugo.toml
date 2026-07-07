@@ -16,11 +16,11 @@ enableRobotsTXT = true
 
   [[params.socialIcons]]
     name = "github"
-    url = "https://github.com/YOUR_GITHUB_USERNAME"
+    url = "https://github.com/JimmerLitter"
 
   [[params.socialIcons]]
     name = "linkedin"
-    url = "https://linkedin.com/in/YOUR_LINKEDIN_USERNAME"
+    url = "https://www.linkedin.com/in/jameshuanger/"
 
 [menu]
   [[menu.main]]
