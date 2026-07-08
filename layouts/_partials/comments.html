@@ -1,0 +1,21 @@
+{{- /* giscus comments (GitHub Discussions). Config lives in hugo.toml [params.giscus]. */ -}}
+{{- with site.Params.giscus }}
+{{- if and .repoId (ne .repoId "REPLACE_WITH_REPO_ID") }}
+<script src="https://giscus.app/client.js"
+        data-repo="{{ .repo }}"
+        data-repo-id="{{ .repoId }}"
+        data-category="{{ .category }}"
+        data-category-id="{{ .categoryId }}"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+{{- end }}
+{{- end }}

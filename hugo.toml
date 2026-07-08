@@ -13,6 +13,9 @@ enableRobotsTXT = true
   ShowShareButtons = false
   ShowPostNavLinks = true
   ShowFullTextinRSS = true
+  ShowToc = true
+  TocOpen = false
+  comments = true
 
   [params.profileMode]
     enabled = true
@@ -42,6 +45,12 @@ enableRobotsTXT = true
   [[params.socialIcons]]
     name = "x"
     url = "https://x.com/jamestuffdemon"
+
+  [params.giscus]
+    repo = "JimmerLitter/JimmerLitter-Personal-Website"
+    repoId = "REPLACE_WITH_REPO_ID"
+    category = "Announcements"
+    categoryId = "REPLACE_WITH_CATEGORY_ID"
 
 [menu]
   [[menu.main]]
