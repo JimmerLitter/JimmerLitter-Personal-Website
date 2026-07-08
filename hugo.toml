@@ -28,8 +28,8 @@ enableRobotsTXT = true
       url = "posts"
 
     [[params.profileMode.buttons]]
-      name = "Projects"
-      url = "projects"
+      name = "Books"
+      url = "books"
 
     [[params.profileMode.buttons]]
       name = "Athletic"
@@ -42,6 +42,10 @@ enableRobotsTXT = true
     [[params.profileMode.buttons]]
       name = "About"
       url = "about"
+
+    [[params.profileMode.buttons]]
+      name = "Resume"
+      url = "James-Huang-Resume.pdf"
 
   [[params.socialIcons]]
     name = "github"
@@ -63,9 +67,9 @@ enableRobotsTXT = true
     weight = 10
 
   [[menu.main]]
-    identifier = "projects"
-    name = "Projects"
-    url = "/projects/"
+    identifier = "books"
+    name = "Books"
+    url = "/books/"
     weight = 20
 
   [[menu.main]]
@@ -85,6 +89,12 @@ enableRobotsTXT = true
     name = "About"
     url = "/about/"
     weight = 50
+
+  [[menu.main]]
+    identifier = "resume"
+    name = "Resume"
+    url = "/James-Huang-Resume.pdf"
+    weight = 60
 
 [taxonomies]
   category = "categories"
