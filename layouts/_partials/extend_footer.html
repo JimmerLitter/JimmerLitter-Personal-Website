@@ -1,0 +1,10 @@
+{{- /* Open the resume PDF in a new tab. Covers both the nav menu link and the
+       Profile Mode button, since PaperMod's link templates don't set a target. */ -}}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('a[href*="James-Huang-Resume"]').forEach(function (a) {
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+    });
+  });
+</script>
