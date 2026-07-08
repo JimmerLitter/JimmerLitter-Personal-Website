@@ -14,6 +14,23 @@ enableRobotsTXT = true
   ShowPostNavLinks = true
   ShowFullTextinRSS = true
 
+  [params.profileMode]
+    enabled = true
+    title = "James Huang"
+    subtitle = "EE @ UCSD · Robotics · building things in LA"
+    imageUrl = "/images/profile.jpg"
+    imageTitle = "James Huang"
+    imageWidth = 120
+    imageHeight = 120
+
+    [[params.profileMode.buttons]]
+      name = "Blog"
+      url = "posts"
+
+    [[params.profileMode.buttons]]
+      name = "About"
+      url = "about"
+
   [[params.socialIcons]]
     name = "github"
     url = "https://github.com/JimmerLitter"
