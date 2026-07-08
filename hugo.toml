@@ -45,7 +45,7 @@ enableRobotsTXT = true
 
     [[params.profileMode.buttons]]
       name = "Resume"
-      url = "James-Huang-Resume.pdf"
+      url = "james-huang-resume.pdf"
 
     [[params.profileMode.buttons]]
       name = "Startup Incubator"
@@ -97,7 +97,7 @@ enableRobotsTXT = true
   [[menu.main]]
     identifier = "resume"
     name = "Resume"
-    url = "/James-Huang-Resume.pdf"
+    url = "/james-huang-resume.pdf"
     weight = 60
 
   [[menu.main]]

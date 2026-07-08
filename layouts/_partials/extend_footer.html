@@ -9,7 +9,7 @@
     var currentHost = norm(window.location.hostname);
     document.querySelectorAll("a[href]").forEach(function (a) {
       var href = a.getAttribute("href") || "";
-      var isResume = href.indexOf("James-Huang-Resume") !== -1;
+      var isResume = href.toLowerCase().indexOf("james-huang-resume") !== -1;
       var linkHost = norm(a.hostname);
       // Internal if it has no host, or its host matches this site (or the page we're on).
       var isInternal = !a.hostname || linkHost === siteHost || linkHost === currentHost;
