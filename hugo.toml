@@ -13,14 +13,11 @@ enableRobotsTXT = true
   ShowShareButtons = false
   ShowPostNavLinks = true
   ShowFullTextinRSS = true
-  ShowToc = true
-  TocOpen = false
-  comments = true
 
   [params.profileMode]
     enabled = true
     title = "James Huang"
-    subtitle = "ECE @ UCSD · Robotics · Buisness Development"
+    subtitle = "ECE @ UCSD · Robotics · Buisness Development · Startups"
     imageUrl = "/images/profile.jpg"
     imageTitle = "James Huang"
     imageWidth = 120
@@ -29,6 +26,18 @@ enableRobotsTXT = true
     [[params.profileMode.buttons]]
       name = "Blog"
       url = "posts"
+
+    [[params.profileMode.buttons]]
+      name = "Projects"
+      url = "projects"
+
+    [[params.profileMode.buttons]]
+      name = "Athletic"
+      url = "athletic"
+
+    [[params.profileMode.buttons]]
+      name = "Creative"
+      url = "creative"
 
     [[params.profileMode.buttons]]
       name = "About"
@@ -46,12 +55,6 @@ enableRobotsTXT = true
     name = "x"
     url = "https://x.com/jamestuffdemon"
 
-  [params.giscus]
-    repo = "JimmerLitter/JimmerLitter-Personal-Website"
-    repoId = "R_kgDOTQ5GlA"
-    category = "Announcements"
-    categoryId = "DIC_kwDOTQ5GlM4DAvOw"
-
 [menu]
   [[menu.main]]
     identifier = "blog"
@@ -60,10 +63,28 @@ enableRobotsTXT = true
     weight = 10
 
   [[menu.main]]
+    identifier = "projects"
+    name = "Projects"
+    url = "/projects/"
+    weight = 20
+
+  [[menu.main]]
+    identifier = "athletic"
+    name = "Athletic"
+    url = "/athletic/"
+    weight = 30
+
+  [[menu.main]]
+    identifier = "creative"
+    name = "Creative"
+    url = "/creative/"
+    weight = 40
+
+  [[menu.main]]
     identifier = "about"
     name = "About"
     url = "/about/"
-    weight = 20
+    weight = 50
 
 [taxonomies]
   category = "categories"
