@@ -1,0 +1,5 @@
+/* Round profile image in Profile Mode */
+.profile .profile_inner img {
+    border-radius: 50%;
+    object-fit: cover;
+}
