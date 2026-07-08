@@ -48,9 +48,9 @@ enableRobotsTXT = true
 
   [params.giscus]
     repo = "JimmerLitter/JimmerLitter-Personal-Website"
-    repoId = "REPLACE_WITH_REPO_ID"
+    repoId = "R_kgDOTQ5GlA"
     category = "Announcements"
-    categoryId = "REPLACE_WITH_CATEGORY_ID"
+    categoryId = "DIC_kwDOTQ5GlM4DAvOw"
 
 [menu]
   [[menu.main]]
