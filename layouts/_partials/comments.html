@@ -1,21 +1,50 @@
 {{- /* giscus comments (GitHub Discussions). Config lives in hugo.toml [params.giscus]. */ -}}
+{{- /* The theme is synced live with PaperMod's light/dark toggle (html[data-theme]). */ -}}
 {{- with site.Params.giscus }}
 {{- if and .repoId (ne .repoId "REPLACE_WITH_REPO_ID") }}
-<script src="https://giscus.app/client.js"
-        data-repo="{{ .repo }}"
-        data-repo-id="{{ .repoId }}"
-        data-category="{{ .category }}"
-        data-category-id="{{ .categoryId }}"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="preferred_color_scheme"
-        data-lang="en"
-        data-loading="lazy"
-        crossorigin="anonymous"
-        async>
+<div id="giscus-container"></div>
+<script>
+  (function () {
+    function giscusTheme() {
+      return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+    }
+
+    // Inject giscus with the reader's current PaperMod theme.
+    var s = document.createElement("script");
+    s.src = "https://giscus.app/client.js";
+    s.setAttribute("data-repo", "{{ .repo }}");
+    s.setAttribute("data-repo-id", "{{ .repoId }}");
+    s.setAttribute("data-category", "{{ .category }}");
+    s.setAttribute("data-category-id", "{{ .categoryId }}");
+    s.setAttribute("data-mapping", "pathname");
+    s.setAttribute("data-strict", "0");
+    s.setAttribute("data-reactions-enabled", "1");
+    s.setAttribute("data-emit-metadata", "0");
+    s.setAttribute("data-input-position", "bottom");
+    s.setAttribute("data-theme", giscusTheme());
+    s.setAttribute("data-lang", "en");
+    s.setAttribute("data-loading", "lazy");
+    s.crossOrigin = "anonymous";
+    s.async = true;
+    document.getElementById("giscus-container").appendChild(s);
+
+    // Keep giscus in sync whenever PaperMod's theme toggle flips html[data-theme].
+    function applyTheme() {
+      var theme = giscusTheme();
+      s.setAttribute("data-theme", theme); // covers a not-yet-lazy-loaded iframe
+      var frame = document.querySelector("iframe.giscus-frame");
+      if (frame) {
+        frame.contentWindow.postMessage(
+          { giscus: { setConfig: { theme: theme } } },
+          "https://giscus.app"
+        );
+      }
+    }
+    new MutationObserver(applyTheme).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+  })();
 </script>
 {{- end }}
 {{- end }}
