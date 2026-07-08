@@ -39,6 +39,10 @@ enableRobotsTXT = true
     name = "linkedin"
     url = "https://www.linkedin.com/in/jameshuanger/"
 
+  [[params.socialIcons]]
+    name = "x"
+    url = "https://x.com/jamestuffdemon"
+
 [menu]
   [[menu.main]]
     identifier = "blog"
