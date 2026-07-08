@@ -1,14 +1,19 @@
-{{- /* Open the resume PDF and any external links (different host) in a new tab.
-       PaperMod's link templates don't expose a target attribute, so this covers
-       the nav menu, Profile Mode buttons, and social icons in one place. */ -}}
+{{- /* Open the resume PDF and any external links (different site) in a new tab.
+       Internal links stay in the same tab. www and non-www are treated as the
+       same site so a canonical-host mismatch can't misflag internal links. */ -}}
+{{- $siteHost := (urls.Parse site.BaseURL).Hostname -}}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    var host = window.location.hostname;
+    function norm(h) { return (h || "").replace(/^www\./, ""); }
+    var siteHost = norm("{{ $siteHost }}");
+    var currentHost = norm(window.location.hostname);
     document.querySelectorAll("a[href]").forEach(function (a) {
       var href = a.getAttribute("href") || "";
       var isResume = href.indexOf("James-Huang-Resume") !== -1;
-      var isExternal = a.hostname && a.hostname !== host;
-      if (isResume || isExternal) {
+      var linkHost = norm(a.hostname);
+      // Internal if it has no host, or its host matches this site (or the page we're on).
+      var isInternal = !a.hostname || linkHost === siteHost || linkHost === currentHost;
+      if (isResume || !isInternal) {
         a.target = "_blank";
         a.rel = "noopener noreferrer";
       }
