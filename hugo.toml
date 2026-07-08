@@ -17,7 +17,7 @@ enableRobotsTXT = true
   [params.profileMode]
     enabled = true
     title = "James Huang"
-    subtitle = "EE @ UCSD · Robotics · building things in LA"
+    subtitle = "ECE @ UCSD · Robotics · Buisness Development"
     imageUrl = "/images/profile.jpg"
     imageTitle = "James Huang"
     imageWidth = 120
