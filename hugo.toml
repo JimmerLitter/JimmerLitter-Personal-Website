@@ -24,6 +24,14 @@ enableRobotsTXT = true
     imageHeight = 120
 
     [[params.profileMode.buttons]]
+      name = "About"
+      url = "about"
+
+    [[params.profileMode.buttons]]
+      name = "Athletic"
+      url = "athletic"
+
+    [[params.profileMode.buttons]]
       name = "Blog"
       url = "posts"
 
@@ -32,24 +40,16 @@ enableRobotsTXT = true
       url = "books"
 
     [[params.profileMode.buttons]]
-      name = "Athletic"
-      url = "athletic"
-
-    [[params.profileMode.buttons]]
       name = "Creative"
       url = "creative"
 
     [[params.profileMode.buttons]]
-      name = "Startup Incubator"
-      url = "https://startupincubatorsd.com/"
-
-    [[params.profileMode.buttons]]
-      name = "About"
-      url = "about"
-
-    [[params.profileMode.buttons]]
       name = "Resume"
       url = "James-Huang-Resume.pdf"
+
+    [[params.profileMode.buttons]]
+      name = "Startup Incubator"
+      url = "https://startupincubatorsd.com/"
 
   [[params.socialIcons]]
     name = "github"
@@ -65,39 +65,33 @@ enableRobotsTXT = true
 
 [menu]
   [[menu.main]]
-    identifier = "blog"
-    name = "Blog"
-    url = "/posts/"
+    identifier = "about"
+    name = "About"
+    url = "/about/"
     weight = 10
-
-  [[menu.main]]
-    identifier = "books"
-    name = "Books"
-    url = "/books/"
-    weight = 20
 
   [[menu.main]]
     identifier = "athletic"
     name = "Athletic"
     url = "/athletic/"
+    weight = 20
+
+  [[menu.main]]
+    identifier = "blog"
+    name = "Blog"
+    url = "/posts/"
     weight = 30
+
+  [[menu.main]]
+    identifier = "books"
+    name = "Books"
+    url = "/books/"
+    weight = 40
 
   [[menu.main]]
     identifier = "creative"
     name = "Creative"
     url = "/creative/"
-    weight = 40
-
-  [[menu.main]]
-    identifier = "startup-incubator"
-    name = "Startup Incubator"
-    url = "https://startupincubatorsd.com/"
-    weight = 45
-
-  [[menu.main]]
-    identifier = "about"
-    name = "About"
-    url = "/about/"
     weight = 50
 
   [[menu.main]]
@@ -105,6 +99,12 @@ enableRobotsTXT = true
     name = "Resume"
     url = "/James-Huang-Resume.pdf"
     weight = 60
+
+  [[menu.main]]
+    identifier = "startup-incubator"
+    name = "Startup Incubator"
+    url = "https://startupincubatorsd.com/"
+    weight = 70
 
 [taxonomies]
   category = "categories"
