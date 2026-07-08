@@ -40,6 +40,10 @@ enableRobotsTXT = true
       url = "creative"
 
     [[params.profileMode.buttons]]
+      name = "Startup Incubator"
+      url = "https://startupincubatorsd.com/"
+
+    [[params.profileMode.buttons]]
       name = "About"
       url = "about"
 
@@ -83,6 +87,12 @@ enableRobotsTXT = true
     name = "Creative"
     url = "/creative/"
     weight = 40
+
+  [[menu.main]]
+    identifier = "startup-incubator"
+    name = "Startup Incubator"
+    url = "https://startupincubatorsd.com/"
+    weight = 45
 
   [[menu.main]]
     identifier = "about"

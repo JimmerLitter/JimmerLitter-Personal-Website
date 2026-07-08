@@ -1,10 +1,17 @@
-{{- /* Open the resume PDF in a new tab. Covers both the nav menu link and the
-       Profile Mode button, since PaperMod's link templates don't set a target. */ -}}
+{{- /* Open the resume PDF and any external links (different host) in a new tab.
+       PaperMod's link templates don't expose a target attribute, so this covers
+       the nav menu, Profile Mode buttons, and social icons in one place. */ -}}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll('a[href*="James-Huang-Resume"]').forEach(function (a) {
-      a.target = "_blank";
-      a.rel = "noopener noreferrer";
+    var host = window.location.hostname;
+    document.querySelectorAll("a[href]").forEach(function (a) {
+      var href = a.getAttribute("href") || "";
+      var isResume = href.indexOf("James-Huang-Resume") !== -1;
+      var isExternal = a.hostname && a.hostname !== host;
+      if (isResume || isExternal) {
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+      }
     });
   });
 </script>
