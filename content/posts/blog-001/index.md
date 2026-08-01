@@ -47,7 +47,7 @@ All these limitations will be tackled some day, but for now they will remain una
 
 Here's a screenshot of the motor I modeled in FEMM with its flux density map. Max flux density is 1.845 T.
 
-![FEMM motor model](Motor flux density mesh plot.PNG)
+![FEMM mesh and |B| flux density plot of the stator/rotor cross-section, peaking at 1.845 T](femm-flux-density.png)
 
 **Copper losses**
 
@@ -84,7 +84,7 @@ Hysteresis loss is the heat generated when you repeatedly magnetize and demagnet
 
 ![Hysteresis loop for soft vs. hard ferromagnetic material](hysteresis-loop.jpg)
 
-As you increase magnetizing force (x-axis), the field density increases (y-axis). Once you reach the corner, you've reached saturation. If you follow the path of the graph counterclockwise, you can see that our magnetizing force has decreased to 0 but its flux density (B) is still high. To bring the magnet back to its original unpowered state, you have to reverse your magnetizing force in the opposite direction so that $B = 0T$ once again. The cost of doing this exerts heat because moving magnetic domains within a magnet to align and realign repeatedly causes a lot of magnetic friction. Faster switching of magnets equals more loss in the core. So hysteresis loss increases with speed as seen in $P_{hyst} = k_h \cdot f \cdot B_{pk}^{\alpha}$.
+As you increase magnetizing force (x-axis), the field density increases (y-axis). Once you reach the corner, you've reached saturation. If you follow the path of the graph counterclockwise, you can see that our magnetizing force has decreased to 0 but its flux density (B) is still high. To bring the magnet back to its original unpowered state, you have to reverse your magnetizing force in the opposite direction so that $B = 0T$ once again. The cost of doing this exerts heat because moving magnetic domains within a magnet to align and realign repeatedly causes a lot of magnetic friction. Faster switching of magnets equals more loss in the core. So hysteresis loss increases with speed as seen in $P_{hyst} = k_h \cdot f \cdot B_{pk}^{\alpha}$, where $B_{pk}$ is the 1.845 T peak flux density pulled from the FEMM sim above.
 
 Eddy current losses in the stator are the reason stators are manufactured with thin silicon steel sheets with a varnish coating. Eddy currents are produced inside the stator that get stronger with frequency. By building stators in sheets, eddy currents are split into smaller components. Since power loss scales by a square factor with current, decrease in current is greatly appreciated, as seen in $P_{eddy} = k_e \cdot f^2 \cdot B_{pk}^2$.
 
@@ -131,8 +131,7 @@ Taking a look at the legends for all these graphs, we can see that copper losses
 | 0.4          | 22.6         | 4.55         | 0.20           | 27.35     | 82.6% | 16.6% | 0.7% |
 | 0.6          | 60.8         | 4.55         | 0.20           | 65.55     | 92.8% | 6.9%  | 0.3% |
 
-Core and mechanical loss stay essentially fixed as torque increases (they track speed, not torque), so copper loss goes from a fifth of total heat at light load to over 90% of it near peak torque.The crossover is what makes copper the loss to optimize for once you push beyond light-duty operation. 
-
+Core and mechanical loss stay essentially fixed as torque increases (they track speed, not torque), so copper loss goes from a fifth of total heat at light load to over 90% of it near peak torque. That crossover is what makes copper the loss to optimize for once you push beyond light-duty operation.
 
 Another table from our graphs, we vary speed here instead and hold torque constant at 0.3 N·m.
 
@@ -167,8 +166,8 @@ You can check out my scripts and figures at my [Github](https://github.com/Jimme
 
 **Sources**
 
-[Datasheet](https://docs.odriverobotics.com/v/latest/hardware/odrive-motors.html)
-(https://things-in-motion.blogspot.com/2019/03/basic-bldc-pmsm-efficiency-and-power.html)
-(https://www.hlaboratories.com/tools/bldc-winding)
-(https://ridleyengineering.com/design-center-ridley-engineering/49-circuit-designs/289-112-the-power-of-dowells-equations-and-curves.html)
-(https://www.machinedesign.com/mechanical-motion-systems/article/21251043/portescap-understanding-losses-in-bldc-motors)
+* [ODrive D5065 datasheet](https://docs.odriverobotics.com/v/latest/hardware/odrive-motors.html)
+* [BLDC/PMSM efficiency and power basics — Things in Motion](https://things-in-motion.blogspot.com/2019/03/basic-bldc-pmsm-efficiency-and-power.html)
+* [BLDC winding tool — H Laboratories](https://www.hlaboratories.com/tools/bldc-winding)
+* [The Power of Dowell's Equations and Curves — Ridley Engineering](https://ridleyengineering.com/design-center-ridley-engineering/49-circuit-designs/289-112-the-power-of-dowells-equations-and-curves.html)
+* [Understanding Losses in BLDC Motors — Machine Design (Portescap)](https://www.machinedesign.com/mechanical-motion-systems/article/21251043/portescap-understanding-losses-in-bldc-motors)
