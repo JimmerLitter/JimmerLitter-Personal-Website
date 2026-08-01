@@ -14,48 +14,52 @@ To start, there are 3 types of heat present in a motor at any time: core losses,
 
 ![Taxonomy of the three heat sources in a BLDC motor: iron, copper, and mechanical losses](loss_taxonomy.png)
 
-Starting with copper losses, you can have heat loss due to the motor demanding current from the electronic speed controller (ESC), which would represent DC current loss as described by $P = I^2 R$. Additionally, as a result of the motor requiring 3-phase power to work, we also have skin effect and proximity effect. The effects of which increase greatly at higher frequencies.
+Starting with copper losses, you can have heat loss due to the motor demanding current from the electronic speed controller (ESC), which would represent DC current loss as described by $P = I^2 R$. Additionally, as a result of the motor requiring 3-phase power to work, we also have skin effect and proximity effect, the effects of which increase greatly at higher frequencies.
 
 Core losses primarily occur within the stator. Heat is generated here by way of hysteresis loss, which is the heat generated from all the alternating magnetic waves present in a motor, and eddy current losses, which are small current loops created within the stator that cause heat.
 
-Lastly, mechanical heat is the easiest to imagine. The touchpoints between the stator, bearings, and shaft are all contact points that rub against one another. As a result, no matter how precise the machining, there will be friction losses, especially at high speeds. Finally, windage loss is waste heat caused by air drag and turbulence as air moves within the motor.
+Lastly, mechanical heat is the easiest to imagine. The rotor and shaft spin as one body; the stator is bonded to a stationary hub, and two bearings bridge the two. Nothing slides, but rolling contact isn't free: ball-race contact friction, grease shear, and seal drag all extract torque, and grease drag grows with speed. Separately, windage is the aerodynamic loss from air being dragged through the gap and around the spinning bell.
 
 Our final goal here is to simulate and graph all these individual sources of heat and see how they change as we adjust torque and RPM. By plotting the combined influence of power losses, and calculating power output as a function of torque and speed with $P = T\omega$ where $\omega = \text{RPM} \cdot 2\pi / 60$, we can determine input power as a function of torque and speed with $P_{in} = P_{out} + P_{loss}$.
 
 Ultimately, the goal is to take input power and output power graphs to determine the efficiency of the motor when driven at a particular operating point. This is helpful to visualize a particular motor's performance.
 
-**Assumptions**
+## Assumptions
 
-There are still some heats I'm not taking into consideration.
+There are still some heat sources I'm not taking into consideration.
 
-* Magnetic eddy currents are current loops that can occur within the permanent magnets on a stator. I'll be modeling this heat in another post, but for now we'll assume its contribution is 0 across all parameters.
+* Magnetic eddy currents are current loops that can occur within the permanent magnets on a rotor. I'll be modeling this heat in another post, but for now we'll assume its contribution is 0 across all parameters.
 * PWM rippling - due to the rapid switching from the ESC, small fluctuations of current occur when fed into the motor. This results in ripple current copper loss, and ripple-flux core loss.
 * Eddy current heating in the rotor itself
-* Magnet thermal feedback loop - increase in magnet heat leads to decrease in field density, which leads to iron loss and torque constant loss. Therefore, copper losses for the same output torque rises.
+* Magnet thermal feedback loop - increase in magnet heat leads to decrease in field flux density, which leads to lower iron loss and torque constant. Therefore, more copper losses for the same output torque. Then the loop begins when copper losses increase again.
 * Bearing loss - Real bearings have grease-viscosity temperature dependence.
-* Drive electronics heat - the mosfets that compose the ESC are also sources of heat loss.
+* Drive electronics heat - the MOSFETs that compose the ESC are also sources of heat loss.
 
-All these limitations will be tackled some day, but for now they will remain unacknowledged.
+All these limitations will be tackled some day, but for now they will remain un-modeled.
 
-**Tools**
+## Tools
 
 * FEMM - used to model geometry of motor and simulate core flux density, slot area, and mass
 * pyFEMM - used to script FEMM
 * Python - used to calculate heats and graphs
 
-**Geometry**
+## Geometry
 
-Here's a screenshot of the motor I modeled in FEMM with its flux density map. Max flux density is 1.845 T. We used a 14P12S configuration with 8 turns per slot. 12AWG circular wire is used. 
+Here's a screenshot of the motor I modeled in FEMM with its flux density map. Max flux density is 1.845 T, which is very large. It's possible that the value came from a tooth tip or a corner mesh artifact. We used a 14P12S configuration with 8 turns per slot. 12AWG circular wire is used. 
 
 ![FEMM mesh and |B| flux density plot of the stator/rotor cross-section, peaking at 1.845 T](femm-flux-density.png)
 
-**Copper losses**
+## Copper losses
 
-Copper losses are one of the more significant heat sources in a motor. This is because for each additional amp of current, the heat squares in magnitude. For a BLDC motor, this is a big issue because if you want to do anything useful you need high current to drive the motor hard. Motors are one of the more current-hungry electronic components out there. Copper losses can be modeled as $P_{cu} = 3 I^2 R$, for the copper loss in all 3 phases. To create the graph, we're going to simulate running the motor at a particular torque and speed, then determine the power loss.
+Copper losses are one of the more significant heat sources in a motor. This is because for each additional amp of current, heat scales with the square of current: double the current, quadruple the loss. 
+
+For a BLDC motor, this is a big issue because if you want to do anything useful you need high current to drive the motor hard. Motors are one of the more current-hungry electronic components out there. 
+
+Copper losses can be modeled as $P_{cu} = 3 I^2 R$, for the copper loss in all 3 phases. To create the graph, we're going to simulate running the motor at a particular torque and speed, then determine the power loss.
 
 ![DC copper loss vs. torque and speed](dc_copper_loss.png)
 
-As you can see, the graph is a bunch of horizontal stacks. The magnitude doesn't change as you vary speed, it stays constant. Torque on the other hand changes has a large impact, and copper losses dramatically scales from 0 to 210 W. This is because torque depends on current to increase. You want more torque, you need a lot of current, and current incurs heat losses. Speed of rotation depends on voltage, which would not incur copper losses at DC.
+The graph is a bunch of horizontal stacks. The magnitude doesn't change as you vary speed, it stays constant. Torque on the other hand changes has a large impact, and copper losses dramatically scales from 0 to 210 W. This is because torque depends on current to increase. You want more torque, you need a lot of current, and current incurs heat losses. Speed of rotation depends on voltage, which would not incur copper losses at DC.
 
 AC copper losses can be thought of as the decrease of effective conduction area in a wire as frequency/RPM increases. This area decrease is due to skin and proximity effects. 
 
@@ -78,7 +82,7 @@ The impact of all this effective shrinkage is accounted for in computing the Dow
 Vertical bands make sense here, Dowell ratio depends on frequency/RPM. If the Dowell ratio goes up that means the AC resistance goes up. If you wanted to actually get AC resistance, you multiply the Dowell ratio by the DC resistance. However, the ratio is so close to unity that the product of the ratio with any DC resistance is basically unchanged. In fact, AC resistance would only contribute a few percent of the total heat loss. It is nearly negligible.
 
 
-**Core losses**
+## Core losses
 
 Hysteresis losses and eddy current losses compose core losses in the stator.
 
@@ -92,15 +96,15 @@ Eddy current losses in the stator are the reason stators are manufactured with t
 
 ![Core loss (hysteresis + eddy current) vs. torque and speed](core_loss.png)
 
-**Mechanical loss**
+## Mechanical loss
 
 Windage is the aerodynamic drag acting on the spinning rotor. This loss is very minuscule and only increases at top speeds. The relationship to speed is quadratic as seen in $P_{windage} = k_{windage} \cdot \omega^2$.
 
-Bearing friction is modeled as a constant 0.2W. Within 0.2W is preload, static, and speed-dependent friction. Friction completely dominates mechanical loss.
+Bearing friction is modeled as a constant 0.2W. Friction completely dominates mechanical loss.
 
 ![Mechanical loss (windage + bearing friction) vs. torque and speed](mech_loss.png)
 
-**Total power analysis and motor efficiency**
+## Total power analysis and motor efficiency
 
 Let's add up all the losses in power we have found.
 
@@ -119,9 +123,9 @@ So we have the input power, we have the output power. Efficiency is simply the m
 
 ![Motor efficiency map vs. torque and speed](efficiency_map_clean.png)
 
-Looking at the graph our most efficient contour sits at ~85% at around 0.2 N·m, if you move to the right, you can drive your motor at higher rpm's without losing efficiency. If you travel up instead, you are able to increase your torque by ~0.2 N·m for no sacrifice in efficiency either. 
+Looking at the graph our most efficient contour sits at ~85% at around 0.2 N·m, if you move to the right, you can drive your motor at higher RPM's without increasing torque. If you travel up instead, you are able to increase your torque by ~0.2 N·m for no sacrifice in efficiency either. 
 
-**Conclusion**
+## Conclusion
 
 Taking a look at the legends for all these graphs, we can see that copper losses are the majority of heat, followed by core and mechanical. The other sources of heat we assumed to be zero are also very insignificant compared to copper losses. Taken from the graphs, we have a table of values as torque varies.
 
@@ -149,8 +153,8 @@ Copper loss barely moves with speed at fixed torque (the small rise from 9.21 W 
 There's a myriad of techniques to minimize copper losses:
 
 * Special stacking methods when winding stator
-* Use square wires to improve winding factor and minimize air gaps
-* Litz wiring - braided wire
+* Use square wires to improve slot factor and minimize air gaps
+* Litz wiring 
 
 Some more ways to decrease other heat and increase efficiency:
 
@@ -160,16 +164,15 @@ Some more ways to decrease other heat and increase efficiency:
 * Better magnets like N52
 * Use FOC control for smoother torque
 * PWM tuning to reduce current rippling
-* Decreasing silicon concentration in steel for higher saturation limits in stator
-* Increasing silicon concentration for lower core loss
+* Silicon content in the electrical steel is a tradeoff, not a knob: more silicon raises resistivity and cuts eddy loss, but lowers saturation flux density. High-silicon grades favor high-speed operation; lower-silicon grades favor torque density.
 
-**What this means for me**
+## What this means for me
 
-I'm working on a robotic actuator right now and there was just too many factors to consider when buying a motor. Understanding how to do all these thermal simulations has been illuminating and I can now comfortably spec my needs. 
+I'm working on a robotic actuator right now and there were too many factors when considering  buying a motor. Understanding how to do all these thermal simulations has been illuminating and I can now comfortably spec my needs. 
 
 You can check out my scripts and figures at my [Github](https://github.com/JimmerLitter/Motor-Loss-Study)
 
-**Sources**
+## Sources
 
 * [ODrive D5065 datasheet](https://docs.odriverobotics.com/v/latest/hardware/odrive-motors.html)
 * [BLDC/PMSM efficiency and power basics — Things in Motion](https://things-in-motion.blogspot.com/2019/03/basic-bldc-pmsm-efficiency-and-power.html)
