@@ -131,26 +131,30 @@ Looking at the graph our most efficient contour sits at ~85% at around 0.2 N·m,
 
 Taking a look at the legends for all these graphs, we can see that copper losses are the majority of heat, followed by core and mechanical. The other sources of heat we assumed to be zero are also very insignificant compared to copper losses. Taken from the graphs, we have a table of values as torque varies.
 
-| Torque [N·m] | $P_{cu}$ [W] | $P_{fe}$ [W] | $P_{mech}$ [W] | Total [W] | Cu % | Fe % | Mech % |
-|-------------:|-------------:|-------------:|---------------:|----------:|-----:|-----:|-------:|
-| 0.1          | 1.3          | 4.55         | 0.20           | 6.05      | 21.5% | 75.2% | 3.3% |
-| 0.2          | 5.2          | 4.55         | 0.20           | 9.95      | 52.3% | 45.7% | 2.0% |
-| 0.4          | 22.6         | 4.55         | 0.20           | 27.35     | 82.6% | 16.6% | 0.7% |
-| 0.6          | 60.8         | 4.55         | 0.20           | 65.55     | 92.8% | 6.9%  | 0.3% |
+| Torque [N·m] | $P_{cu}$ [W] | $P_{fe}$ [W] | $P_{mech}$ [W] | Winding temp [°C] | Efficiency |
+|-------------:|-------------:|-------------:|---------------:|------------------:|-----------:|
+| 0.1          | 1.02         | 6.80         | 0.20           | 27                | 79.1%      |
+| 0.2          | 4.10         | 6.80         | 0.20           | 28                | 84.6%      |
+| 0.3          | 9.28         | 6.80         | 0.20           | 30                | 84.9%      |
+| 0.4          | 16.63        | 6.80         | 0.20           | 32                | 83.7%      |
+| 0.6          | 38.32        | 6.80         | 0.20           | 38                | 80.1%      |
+| 0.8          | 70.50        | 6.80         | 0.20           | 47                | 75.8%      |
 
 Core and mechanical loss stay essentially fixed as torque increases (they track speed, not torque), so copper loss goes from a fifth of total heat at light load to over 90% of it near peak torque. That crossover is what makes copper the loss to optimize for once you push beyond light-duty operation.
 
 Another table from our graphs, we vary speed here instead and hold torque constant at 0.3 N·m.
 
-| Speed [RPM] | $P_{cu}$ [W] | $P_{fe}$ [W] | $P_{mech}$ [W] | Winding temp [°C] | Efficiency |
-|------------:|-------------:|-------------:|----------------:|------------------:|-----------:|
-| 200         | 9.21         | 0.25         | 0.20            | 27.8               | 39.4%      |
-| 1500        | 9.23         | 2.66         | 0.20            | 28.5               | 79.6%      |
-| 3240        | 9.29         | 8.03         | 0.20            | 30.1               | 85.3%      |
-| 4800        | 9.36         | 14.94        | 0.20            | 32.1               | 86.0%      |
-| 6480        | 9.46         | 24.58        | 0.20            | 34.9               | 85.6%      |
 
-Copper loss barely moves with speed at fixed torque (the small rise from 9.21 W to 9.46 W is the AC/Dowell penalty, not the DC term). Core loss is what climbs, from negligible to over 2.5x the copper loss by top speed. Efficiency rises fast as output power ramps up, peaks around 4800 RPM, then edges back down as core loss growth outpaces the gain in output power.
+| Speed [RPM] | $f_{\text{elec}}$ [Hz] | $P_{cu}$ [W] | $P_{fe}$ [W] | Winding temp [°C] | Efficiency |
+|------------:|-----------------------:|-------------:|-------------:|------------------:|-----------:|
+| 200         | 23                     | 9.21         | 0.25         | 28                | 39.4%      |
+| 1000        | 117                    | 9.22         | 1.57         | 28                | 74.1%      |
+| 2000        | 233                    | 9.25         | 3.95         | 29                | 82.4%      |
+| 2904        | 339                    | 9.28         | 6.80         | 30                | 84.9%      |
+| 4000        | 467                    | 9.32         | 11.15        | 31                | 85.9%      |
+| 5808        | 678                    | 9.42         | 20.45        | 34                | 85.9%      |
+
+Copper loss barely moves with speed at fixed torque. Core loss is what climbs, from negligible to over 20W. 2x the copper loss by top speed. Efficiency rises fast as output power ramps up, peaks around 4000 RPM, then edges back down as core loss growth outpaces the gain in output power.
 
 There's a myriad of techniques to minimize copper losses:
 
