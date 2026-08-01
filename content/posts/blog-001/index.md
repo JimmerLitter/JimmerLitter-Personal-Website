@@ -114,8 +114,6 @@ So we have the input power, we have the output power. Efficiency is simply the m
 
 Looking at the graph our most efficient contour sits at ~85% at around 0.2 Nm, if you move to the right, you can drive your motor at higher rpm's without losing efficiency or increasing RPM. If you travel up instead, you are able to increase your torque by ~0.2 Nm for no sacrifice in efficiency either. The crossover point is something you implicitly optimize for.
 
-The white contour lines are efficiency isolines — 80% and 85% — and the dark diagonal line cutting across the top-right corner is the continuous thermal limit: the maximum torque the winding can sustain at each speed before it exceeds its rated temperature, from the thermal feedback model (winding resistance rises with temperature, which raises copper loss, which raises temperature further, solved to steady state). Below about 4800 RPM, that limit sits above the motor's datasheet peak torque, meaning the winding could thermally sustain more than peak torque continuously across most of the map — it's only in the high-speed corner that core and windage losses eat enough of the thermal budget to pull the continuous limit below peak. Efficiency itself tops out around 92%, in a broad band at mid-to-high torque and mid-to-high speed, which lines up with where copper loss (the dominant term at high torque) hasn't yet been compounded by rising core loss at the very top of the speed range.
-
 **Conclusion**
 
 Taking a look at the legends for all these graphs, we can see that copper losses are the majority of heat, followed by iron and mechanical. The other sources of heat we assumed to be zero are also very insignificant compared to copper losses. Taken from the graphs, we have a table of values as torque varies.
@@ -130,7 +128,7 @@ Taking a look at the legends for all these graphs, we can see that copper losses
 Core and mechanical loss stay essentially fixed as torque increases (they track speed, not torque), so copper loss goes from a fifth of total heat at light load to over 90% of it near peak torque.The crossover is what makes copper the loss to optimize for once you push beyond light-duty operation. 
 
 
-Another table from our graphs, we vary speed here instead.
+Another table from our graphs, we vary speed here instead and hold torque constant at 0.3 N·m.
 
 | Speed [rpm] | $P_{cu}$ [W] | $P_{fe}$ [W] | $P_{mech}$ [W] | Winding temp [°C] | Efficiency |
 |------------:|-------------:|-------------:|----------------:|------------------:|-----------:|
@@ -146,7 +144,7 @@ There's a myriad of techniques to minimize copper losses:
 
 * Special stacking methods when winding stator
 * Use square wires to improve winding factor and minimize air gaps
-* Litz wiring
+* Litz wiring - braided wire
 
 Some more ways to decrease other heat and increase efficiency:
 
