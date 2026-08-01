@@ -98,7 +98,11 @@ So we have the input power, we have the output power. Efficiency is simply the m
 Efficiency\_map\_clean.png
 
 **Conclusion**  
-Taking a look at the legends for all these graphs, we can see that copper losses are the majority of heat, followed by iron and mechanical. The other sources of heat we assumed to be zero are also very insignificant compared to copper losses. There's a myriad of techniques to minimize copper losses: 
+Taking a look at the legends for all these graphs, we can see that copper losses are the majority of heat, followed by iron and mechanical. The other sources of heat we assumed to be zero are also very insignificant compared to copper losses. 
+
+
+
+There's a myriad of techniques to minimize copper losses: 
 
 * Special stacking methods when winding stator  
 * Use square wires to improve winding factor and minimize air gaps  

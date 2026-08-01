@@ -34,7 +34,6 @@ There are still some heats I'm not taking into consideration.
 * Magnet thermal feedback loop - increase in magnet heat leads to decrease in field density, which leads to iron loss and torque constant loss. Therefore, copper losses for the same output torque rises.
 * Bearing loss - we mentioned bearing loss but it was modeled as a constant. Real bearings have grease-viscosity temperature dependence.
 * Drive electronics heat - the mosfets that compose the ESC are also sources of heat loss.
-* Temperature rise - temperature is assumed to stay ambient, of course this isn't true in reality. Modeling properly requires feedback loops.
 
 All these limitations will be tackled some day, but for now they will remain unacknowledged.
 
@@ -68,7 +67,8 @@ The impact of all this effective shrinkage is accounted for in computing the Dow
 
 ![AC-to-DC resistance ratio (Dowell ratio) vs. frequency/RPM](ac_ratio.png)
 
-Vertical bands make sense here, Dowell ratio depends on frequency/RPM. If the Dowell ratio goes up that means the AC resistance goes up. If you wanted to actually get AC resistance, you multiply the Dowell ratio by the DC resistance.
+Vertical bands make sense here, Dowell ratio depends on frequency/RPM. If the Dowell ratio goes up that means the AC resistance goes up. If you wanted to actually get AC resistance, you multiply the Dowell ratio by the DC resistance. However, the ratio is so close to unity that the product of the ratio with any DC resistance is basically equal to DC resistance still. In fact, AC resistance would only contribute a few percent of the total heat loss. It is nearly negligible.
+
 
 **Core losses**
 
@@ -78,7 +78,7 @@ Hysteresis loss is the heat generated when you repeatedly magnetize and demagnet
 
 ![Hysteresis loop for soft vs. hard ferromagnetic material](hysteresis-loop.jpg)
 
-As you increase magnetizing force (x-axis), the field density increases (y-axis). Once you reach the corner, you have saturated the magnet and created a permanent magnet. If you follow the path of the graph counterclockwise, you can see that our magnetizing force has decreased to 0 but its flux density (B) is still high. To bring the magnet back to its original unpowered state, you have to reverse your magnetizing force in the opposite direction so that $B = 0T$ once again. The cost of doing this exerts heat because moving magnetic domains within a magnet to align and realign repeatedly causes a lot of magnetic friction. Faster switching of magnets equals more loss in the core. So hysteresis loss increases with speed as seen in $P_{hyst} = k_h \cdot f \cdot B_{pk}^{\alpha}$.
+As you increase magnetizing force (x-axis), the field density increases (y-axis). Once you reach the corner, you've reached saturation. If you follow the path of the graph counterclockwise, you can see that our magnetizing force has decreased to 0 but its flux density (B) is still high. To bring the magnet back to its original unpowered state, you have to reverse your magnetizing force in the opposite direction so that $B = 0T$ once again. The cost of doing this exerts heat because moving magnetic domains within a magnet to align and realign repeatedly causes a lot of magnetic friction. Faster switching of magnets equals more loss in the core. So hysteresis loss increases with speed as seen in $P_{hyst} = k_h \cdot f \cdot B_{pk}^{\alpha}$.
 
 Eddy current losses in the stator are the reason stators are manufactured with thin silicon steel sheets with a varnish coating. Eddy currents are produced inside the stator that get stronger with frequency. By building stators in sheets, eddy currents are split into smaller components. Since power loss scales by a square factor with current, decrease in current is greatly appreciated, as seen in $P_{eddy} = k_e \cdot f^2 \cdot B_{pk}^2$.
 
@@ -86,7 +86,7 @@ Eddy current losses in the stator are the reason stators are manufactured with t
 
 **Mechanical loss**
 
-Windage is the aerodynamic drag acting on the spinning rotor. This loss is very miniscule and only increases at top speeds. The relationship to speed is quadratic as seen in $k_{windage} \cdot \omega^2$.
+Windage is the aerodynamic drag acting on the spinning rotor. This loss is very miniscule and only increases at top speeds. The relationship to speed is quadratic as seen in $P_{windage} = k_{windage} \cdot \omega^2$.
 
 Bearing friction is modeled as a constant 0.2W. Friction dominates mechanical loss. Within 0.2W is preload, static, and speed-dependent friction.
 
@@ -112,9 +112,37 @@ So we have the input power, we have the output power. Efficiency is simply the m
 
 ![Motor efficiency map vs. torque and speed](efficiency_map_clean.png)
 
+Looking at the graph our most efficient contour sits at ~85% at around 0.2 Nm, if you move to the right, you can drive your motor at higher rpm's without losing efficiency or increasing RPM. If you travel up instead, you are able to increase your torque by ~0.2 Nm for no sacrifice in efficiency either. The crossover point is something you implicitly optimize for.
+
+The white contour lines are efficiency isolines — 80% and 85% — and the dark diagonal line cutting across the top-right corner is the continuous thermal limit: the maximum torque the winding can sustain at each speed before it exceeds its rated temperature, from the thermal feedback model (winding resistance rises with temperature, which raises copper loss, which raises temperature further, solved to steady state). Below about 4800 RPM, that limit sits above the motor's datasheet peak torque, meaning the winding could thermally sustain more than peak torque continuously across most of the map — it's only in the high-speed corner that core and windage losses eat enough of the thermal budget to pull the continuous limit below peak. Efficiency itself tops out around 92%, in a broad band at mid-to-high torque and mid-to-high speed, which lines up with where copper loss (the dominant term at high torque) hasn't yet been compounded by rising core loss at the very top of the speed range.
+
 **Conclusion**
 
-Taking a look at the legends for all these graphs, we can see that copper losses are the majority of heat, followed by iron and mechanical. The other sources of heat we assumed to be zero are also very insignificant compared to copper losses. There's a myriad of techniques to minimize copper losses:
+Taking a look at the legends for all these graphs, we can see that copper losses are the majority of heat, followed by iron and mechanical. The other sources of heat we assumed to be zero are also very insignificant compared to copper losses. Taken from the graphs, we have a table of values as torque varies.
+
+| Torque [N·m] | $P_{cu}$ [W] | $P_{fe}$ [W] | $P_{mech}$ [W] | Total [W] | Cu % | Fe % | Mech % |
+|-------------:|-------------:|-------------:|---------------:|----------:|-----:|-----:|-------:|
+| 0.1          | 1.3          | 4.55         | 0.20           | 6.05      | 21.5% | 75.2% | 3.3% |
+| 0.2          | 5.2          | 4.55         | 0.20           | 9.95      | 52.3% | 45.7% | 2.0% |
+| 0.4          | 22.6         | 4.55         | 0.20           | 27.35     | 82.6% | 16.6% | 0.7% |
+| 0.6          | 60.8         | 4.55         | 0.20           | 65.55     | 92.8% | 6.9%  | 0.3% |
+
+Core and mechanical loss stay essentially fixed as torque increases (they track speed, not torque), so copper loss goes from a fifth of total heat at light load to over 90% of it near peak torque.The crossover is what makes copper the loss to optimize for once you push beyond light-duty operation. 
+
+
+Another table from our graphs, we vary speed here instead.
+
+| Speed [rpm] | $P_{cu}$ [W] | $P_{fe}$ [W] | $P_{mech}$ [W] | Winding temp [°C] | Efficiency |
+|------------:|-------------:|-------------:|----------------:|------------------:|-----------:|
+| 200         | 9.21         | 0.25         | 0.20            | 27.8               | 39.4%      |
+| 1500        | 9.23         | 2.66         | 0.20            | 28.5               | 79.6%      |
+| 3240        | 9.29         | 8.03         | 0.20            | 30.1               | 85.3%      |
+| 4800        | 9.36         | 14.94        | 0.20            | 32.1               | 86.0%      |
+| 6480        | 9.46         | 24.58        | 0.20            | 34.9               | 85.6%      |
+
+Copper loss barely moves with speed at fixed torque (the small rise from 9.21 W to 9.46 W is the AC/Dowell penalty, not the DC term) — core loss is what climbs, from negligible to over 2.5x the copper loss by top speed. Efficiency rises fast as output power ramps up, peaks around 4800 RPM, then edges back down as core loss growth outpaces the gain in output power.
+
+There's a myriad of techniques to minimize copper losses:
 
 * Special stacking methods when winding stator
 * Use square wires to improve winding factor and minimize air gaps
@@ -130,3 +158,5 @@ Some more ways to decrease other heat and increase efficiency:
 * PWM tuning to reduce current rippling
 * Decreasing silicon concentration in steel for higher saturation limits in stator
 * Increasing silicon concentration for lower core loss
+
+You can check out my scripts and figures at my [Github](https://github.com/JimmerLitter/Motor-Loss-Study)
