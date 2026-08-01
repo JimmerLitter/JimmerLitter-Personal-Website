@@ -24,7 +24,6 @@ There are still some heats I'm not taking into consideration.
 * Magnet thermal feedback loop \- increase in magnet heats leads to decrease in field density, which leads to iron loss and torque constant loss. Therefore, copper losses for the same output torque rises.   
 * Bearing loss \- We mentioned bearing loss but it was modeled as a constant. Real bearings have grease-viscosity temperature dependence.   
 * Drive electronics heat \- the mosfets that compose the esc are also sources of heat loss.   
-* Temperature rise \- Temperature is assumed to stay ambient, of course this isn’t true in reality. Modeling properly requires feedback loops
 
 All these limitations will be tacked some day, but for now they will remain unacknowledged. 
 
