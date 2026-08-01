@@ -45,7 +45,7 @@ All these limitations will be tackled some day, but for now they will remain una
 
 **Geometry**
 
-Here's a screenshot of the motor I modeled in FEMM with its flux density map. Max flux density is 1.845 T.
+Here's a screenshot of the motor I modeled in FEMM with its flux density map. Max flux density is 1.845 T. We used a 14P12S configuration with 8 turns per slot. 12AWG circular wire is used. 
 
 ![FEMM mesh and |B| flux density plot of the stator/rotor cross-section, peaking at 1.845 T](femm-flux-density.png)
 
@@ -162,6 +162,8 @@ Some more ways to decrease other heat and increase efficiency:
 * Decreasing silicon concentration in steel for higher saturation limits in stator
 * Increasing silicon concentration for lower core loss
 
+**What this means for me**
+I'm working on a robotic actuator right now and there was just too many factors to consider when buying a motor. Understanding how to do all these thermal simulations has been illuminating and I can now comfortably spec my needs. 
 You can check out my scripts and figures at my [Github](https://github.com/JimmerLitter/Motor-Loss-Study)
 
 **Sources**
