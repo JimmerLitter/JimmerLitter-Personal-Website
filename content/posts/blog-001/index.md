@@ -3,6 +3,8 @@ title: "Ramblings on Heat and Efficiency"
 date: 2026-08-01
 draft: false
 math: true
+showToc: true
+TocOpen: false
 tags: ["motors", "electronics", "engineering"]
 categories: ["blog"]
 description: "Breaking down every source of heat in a BLDC motor — copper, core, and mechanical losses — using the ODrive D5065 as a model, and building toward an efficiency map."
