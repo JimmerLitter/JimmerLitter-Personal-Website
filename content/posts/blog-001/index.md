@@ -163,6 +163,7 @@ Some more ways to decrease other heat and increase efficiency:
 * Increasing silicon concentration for lower core loss
 
 **What this means for me**
+
 I'm working on a robotic actuator right now and there was just too many factors to consider when buying a motor. Understanding how to do all these thermal simulations has been illuminating and I can now comfortably spec my needs. 
 
 You can check out my scripts and figures at my [Github](https://github.com/JimmerLitter/Motor-Loss-Study)
