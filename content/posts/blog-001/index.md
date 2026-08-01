@@ -43,6 +43,12 @@ All these limitations will be tackled some day, but for now they will remain una
 * pyFEMM - used to script FEMM
 * Python - used to calculate heats and graphs
 
+**Geometry**
+
+Here's a screenshot of the motor I modeled in FEMM with its flux density map. Max flux density is 1.845 T.
+
+![FEMM motor model](Motor flux density mesh plot.PNG)
+
 **Copper losses**
 
 Copper losses are one of the more significant heat sources in a motor. This is because for each additional amp of current, the heat squares in magnitude. For a BLDC motor, this is a big issue because if you want to do anything useful you need high current to drive the motor hard. Motors are one of the more current-hungry electronic components out there. Copper losses can be modeled as $P_{cu} = 3 I^2 R$, for the copper loss in all 3 phases. To create the graph, we're going to simulate running the motor at a particular torque and speed, then determine the power loss.
@@ -158,3 +164,11 @@ Some more ways to decrease other heat and increase efficiency:
 * Increasing silicon concentration for lower core loss
 
 You can check out my scripts and figures at my [Github](https://github.com/JimmerLitter/Motor-Loss-Study)
+
+**Sources**
+
+[Datasheet](https://docs.odriverobotics.com/v/latest/hardware/odrive-motors.html)
+(https://things-in-motion.blogspot.com/2019/03/basic-bldc-pmsm-efficiency-and-power.html)
+(https://www.hlaboratories.com/tools/bldc-winding)
+(https://ridleyengineering.com/design-center-ridley-engineering/49-circuit-designs/289-112-the-power-of-dowells-equations-and-curves.html)
+(https://www.machinedesign.com/mechanical-motion-systems/article/21251043/portescap-understanding-losses-in-bldc-motors)
