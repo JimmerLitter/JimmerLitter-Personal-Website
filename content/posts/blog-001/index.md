@@ -1,6 +1,6 @@
 ---
 title: "Ramblings on Heat and Efficiency"
-date: 2026-07-31
+date: 2026-08-01
 draft: false
 math: true
 tags: ["motors", "electronics", "engineering"]
