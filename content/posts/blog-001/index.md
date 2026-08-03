@@ -14,7 +14,7 @@ Today, I'll be showing all the sources of heat within a BLDC motor. We'll be usi
 
 To start, there are 3 types of heat present in a motor at any time: core losses, copper losses, and mechanical losses.
 
-![Taxonomy of the three heat sources in a BLDC motor: iron, copper, and mechanical losses](loss_taxonomy.png)
+![Taxonomy of the three heat sources in a BLDC motor: iron, copper, and mechanical losses](figures/loss_taxonomy.png)
 
 Starting with copper losses, you can have heat loss due to the motor demanding current from the electronic speed controller (ESC), which would represent DC current loss as described by $P = I^2 R$. Additionally, as a result of the motor requiring 3-phase power to work, we also have skin effect and proximity effect, the effects of which increase greatly at higher frequencies.
 
@@ -49,7 +49,7 @@ All these limitations will be tackled some day, but for now they will remain un-
 
 Here's a screenshot of the motor I modeled in FEMM with its flux density map. Max flux density is 1.845 T, which is very large. It's possible that the value came from a tooth tip or a corner mesh artifact. We used a 14P12S configuration with 8 turns per slot. 12AWG circular wire is used. 
 
-![FEMM mesh and |B| flux density plot of the stator/rotor cross-section, peaking at 1.845 T](femm-flux-density.png)
+![FEMM mesh and |B| flux density plot of the stator/rotor cross-section, peaking at 1.845 T](figures/femm-flux-density.png)
 
 ## Copper losses
 
@@ -59,7 +59,7 @@ For a BLDC motor, this is a big issue because if you want to do anything useful 
 
 Copper losses can be modeled as $P_{cu} = 3 I^2 R$, for the copper loss in all 3 phases. To create the graph, we're going to simulate running the motor at a particular torque and speed, then determine the power loss.
 
-![DC copper loss vs. torque and speed](dc_copper_loss.png)
+![DC copper loss vs. torque and speed](figures/dc_copper_loss.png)
 
 The graph is a bunch of horizontal stacks. The magnitude doesn't change as you vary speed, it stays constant. Torque on the other hand changes has a large impact, and copper losses dramatically scales from 0 to 210 W. This is because torque depends on current to increase. You want more torque, you need a lot of current, and current incurs heat losses. Speed of rotation depends on voltage, which would not incur copper losses at DC.
 
@@ -67,7 +67,7 @@ AC copper losses can be thought of as the decrease of effective conduction area 
 
 Skin effect is a result of self-induced eddy currents within a wire's own body that go against the actual DC current. It directly opposes real current flow in the center so much so that the actual conducting area of the wire becomes shaped like an annulus.
 
-![Skin effect: self-induced eddy currents push current density toward the conductor's surface, shrinking the effective conducting area to an annulus](skin-effect.jpg)
+![Skin effect: self-induced eddy currents push current density toward the conductor's surface, shrinking the effective conducting area to an annulus](figures/skin-effect.jpg)
 
 Resistance of a wire is inversely proportional to its area; by decreasing area, you increase resistance, thus increasing losses since current would be held constant. $R = \frac{\rho L}{A}$
 
@@ -75,11 +75,11 @@ A current in a smaller area will produce more heat than that same current in a l
 
 Proximity effect is essentially the same phenomenon but from a neighboring wire instead. Induced eddy currents from neighboring coils oppose real current flow. Depending on the orientation of this external wire, the area can skew and shrink towards the left or right edge of the wire. 
 
-![Proximity effect: induced eddy currents from a neighboring conductor push current density toward one edge of the wire](proximity-effect.jpg)
+![Proximity effect: induced eddy currents from a neighboring conductor push current density toward one edge of the wire](figures/proximity-effect.jpg)
 
 The impact of all this effective shrinkage is accounted for in computing the Dowell ratio $R_{ac}/R_{dc}$, a dimensionless number. This is what we measure changing in our graph this time, instead of pure watts.
 
-![AC-to-DC resistance ratio (Dowell ratio) vs. frequency/RPM](ac_ratio.png)
+![AC-to-DC resistance ratio (Dowell ratio) vs. frequency/RPM](figures/ac_ratio.png)
 
 Vertical bands make sense here, Dowell ratio depends on frequency/RPM. If the Dowell ratio goes up that means the AC resistance goes up. If you wanted to actually get AC resistance, you multiply the Dowell ratio by the DC resistance. However, the ratio is so close to unity that the product of the ratio with any DC resistance is basically unchanged. In fact, AC resistance would only contribute a few percent of the total heat loss. It is nearly negligible.
 
@@ -90,13 +90,13 @@ Hysteresis losses and eddy current losses compose core losses in the stator.
 
 Hysteresis loss is the heat generated when you repeatedly magnetize and demagnetize a metal. This can be seen in a hysteresis loop.
 
-![Hysteresis loop for soft vs. hard ferromagnetic material](hysteresis-loop.jpg)
+![Hysteresis loop for soft vs. hard ferromagnetic material](figures/hysteresis-loop.jpg)
 
 As you increase magnetizing force (x-axis), the field density increases (y-axis). Once you reach the corner, you've reached saturation. If you follow the path of the graph counterclockwise, you can see that our magnetizing force has decreased to 0 but its flux density (B) is still high. To bring the magnet back to its original un-powered state, you have to reverse your magnetizing force in the opposite direction so that $B = 0T$ once again. The cost of doing this exerts heat because moving magnetic domains within a magnet to align and realign repeatedly causes a lot of magnetic friction. Faster switching of magnets equals more loss in the core. So hysteresis loss increases with speed as seen in $P_{hyst} = k_h \cdot f \cdot B_{pk}^{\alpha}$, where $B_{pk}$ is the 1.845 T peak flux density pulled from the FEMM sim above.
 
 Eddy current losses in the stator are the reason stators are manufactured with thin silicon steel sheets with a varnish coating. Eddy currents are produced inside the stator, and they get stronger with frequency increase. By splitting stators into sheets, eddy currents are split into smaller components. Since power loss scales with current, decrease in current is greatly appreciated, as seen in $P_{eddy} = k_e \cdot f^2 \cdot B_{pk}^2$.
 
-![Core loss (hysteresis + eddy current) vs. torque and speed](core_loss.png)
+![Core loss (hysteresis + eddy current) vs. torque and speed](figures/core_loss.png)
 
 ## Mechanical loss
 
@@ -104,26 +104,26 @@ Windage is the aerodynamic drag acting on the spinning rotor. This loss is very 
 
 Bearing friction is modeled as a constant 0.2W. Friction completely dominates mechanical loss.
 
-![Mechanical loss (windage + bearing friction) vs. torque and speed](mech_loss.png)
+![Mechanical loss (windage + bearing friction) vs. torque and speed](figures/mech_loss.png)
 
 ## Total power analysis and motor efficiency
 
 Let's add up all the losses in power we have found.
 
-![Total power loss vs. torque and speed](total_loss.png)
+![Total power loss vs. torque and speed](figures/total_loss.png)
 
 
 Now, let's get the power output by multiplying torque and angular speed.
 
-![Output power vs. torque and speed](output_power.png)
+![Output power vs. torque and speed](figures/output_power.png)
 
 Input power is then given by $P_{in} = P_{out} + P_{loss}$, so just sum the graphs.
 
-![Input power vs. torque and speed](input_power.png)
+![Input power vs. torque and speed](figures/input_power.png)
 
 So we have the input power, we have the output power. Efficiency is simply the measure of the ratio between those two quantities. $\eta = P_{out}/P_{in} = \tau\omega/VI$. $\tau\omega$ are the output metrics and $VI$ are the input metrics. Together we get this.
 
-![Motor efficiency map vs. torque and speed](efficiency_map_clean.png)
+![Motor efficiency map vs. torque and speed](figures/efficiency_map_clean.png)
 
 Looking at the graph our most efficient contour sits at ~85% at around 0.2 N·m, if you move to the right, you can drive your motor at higher RPM's without increasing torque. If you travel up instead, you are able to increase your torque by ~0.2 N·m for no sacrifice in efficiency either. 
 
