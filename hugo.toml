@@ -40,8 +40,8 @@ enableRobotsTXT = true
       url = "books"
 
     [[params.profileMode.buttons]]
-      name = "Creative"
-      url = "creative"
+      name = "Tags"
+      url = "tags"
 
     [[params.profileMode.buttons]]
       name = "Resume"

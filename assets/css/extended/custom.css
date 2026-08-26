@@ -3,3 +3,56 @@
     border-radius: 50%;
     object-fit: cover;
 }
+
+/* Athletic page photo gallery: 2 per row with captions */
+.athletic-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--content-gap, 20px);
+    margin: var(--content-gap, 20px) 0;
+}
+
+.athletic-gallery-item {
+    margin: 0;
+}
+
+.athletic-gallery-item img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+}
+
+.athletic-gallery-item figcaption {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: var(--secondary);
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .athletic-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .athletic-gallery-item img {
+        height: auto;
+    }
+}
+
+/* Tags moved to the top of the article (layouts/single.html); a little
+   breathing room under the post meta line. */
+.post-header .post-tags {
+    margin-top: 10px;
+}
+
+/* Tag pills on blog list cards (layouts/list.html). The card has a
+   full-bleed overlay link (.entry-link) with no z-index, so these need
+   position+z-index to stay clickable above it. */
+.entry-tags {
+    position: relative;
+    z-index: 1;
+    margin-top: 10px;
+    margin-bottom: 4px;
+}

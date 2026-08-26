@@ -1,0 +1,54 @@
+{{- define "main" }}
+
+{{- if not .IsHome | and .Title }}
+<header class="page-header">
+  {{- partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{- if .Description }}
+  <div class="post-description">
+    {{ .Description | markdownify }}
+  </div>
+  {{- end }}
+</header>
+{{- end }}
+
+{{- if .Content }}
+<div class="post-content md-content">
+  {{- if not (.Param "disableAnchoredHeadings") }}
+  {{- partial "anchored_headings.html" .Content -}}
+  {{- else }}{{ .Content }}{{ end }}
+</div>
+{{- end }}
+
+{{- $photos := .Params.photos }}
+{{- if $photos }}
+<div class="athletic-gallery">
+  {{- range $photos }}
+  <figure class="athletic-gallery-item">
+    <img src="{{ .image }}" alt="{{ .alt | default .caption }}" loading="lazy">
+    {{- with .caption }}
+    <figcaption>{{ . }}</figcaption>
+    {{- end }}
+  </figure>
+  {{- end }}
+</div>
+{{- end }}
+
+{{- $pages := union .RegularPages .Sections }}
+{{- if $pages }}
+{{- range $pages }}
+<article class="post-entry">
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">{{ .Title }}</h2>
+  </header>
+  {{- if (ne (.Param "hideSummary") true) }}
+  <div class="entry-content">
+    <p>{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}</p>
+  </div>
+  {{- end }}
+  <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
+</article>
+{{- end }}
+{{- end }}
+
+{{- end }}{{- /* end main */ -}}
