@@ -13,7 +13,7 @@ description: "Building my first cycloidal gearbox on a 3D printer, and learning 
 
 I chose the cycloidal drive as my first gearbox because I was very interested in the motion. I still remember I came across a YouTube video that was alluding to getting higher torque gears without teeth. Needless to say, it was an unskippable title, and after watching it, I was determined to get my hands dirty with a 3D-printed design.
 
-With limited hours of access in my local makerspace, this little gearbox actually took me nearly 2 weeks to even be done, and it's not even good either! Here's why it took me so long:
+With limited hours of access in my local makerspace, this little gearbox actually took me nearly 2 weeks to even be done, and it's not even good yet. Here's why it took me so long:
 
 I didn't start off CADing the whole thing. I copied tutorials online and their respective design files since I was a noob. I prioritized getting this done and just building, so I opted to bring what the tutorial gave me. This was a big mistake because there were some measurements I needed that were difficult to measure with calipers or rulers or anything. I also didn't have access to the actual 3D model, only the pure STL. Not owning the measurements cost me a lot of time doing trial and error. Sometimes the holes were too small and I had to add negatives in the slicer for every single hole; super duper tedious and annoying. Definitely, when I run a second iteration, I will model it from the ground up, but I also feel like I had to learn this lesson the hard way so I don't get lazy again. If it's any consolation, I was just trying to get this done before I had to leave the country.
 
