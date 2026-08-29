@@ -2,6 +2,8 @@
 title: "Ramblings on Heat and Efficiency"
 date: 2026-08-01
 draft: false
+slug: "bldc-motor-heat-losses-efficiency"
+aliases: ["/posts/blog-001/"]
 math: true
 showToc: true
 TocOpen: false
@@ -168,13 +170,13 @@ Some more ways to decrease other heat and increase efficiency:
 * Splitting magnets in half and skewing
 * Backplate to concentrate magnetic fields inside motor
 * Better magnets like N52
-* Use FOC control for smoother torque
+* Use [FOC control]({{< relref "blog-002" >}}) for smoother torque
 * PWM tuning to reduce current rippling
 * Silicon content in the electrical steel is a tradeoff, not a knob: more silicon raises resistivity and cuts eddy loss, but lowers saturation flux density. High-silicon grades favor high-speed operation; lower-silicon grades favor torque density.
 
 ## What this means for me
 
-I'm working on a robotic actuator right now and there were too many factors when considering  buying a motor. Understanding how to do all these thermal simulations has been illuminating and I can now comfortably spec my needs. 
+I'm working on a [robotic actuator]({{< relref "blog-003" >}}) right now and there were too many factors when considering buying a motor. Understanding how to do all these thermal simulations has been illuminating and I can now comfortably spec my needs. 
 
 You can check out my scripts and figures at my [Github](https://github.com/JimmerLitter/Motor-Loss-Study)
 

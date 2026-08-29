@@ -6,6 +6,10 @@ enableRobotsTXT = true
 
 [params]
   defaultTheme = "auto"
+  author = "James Huang"
+  # Fallback image for social/OpenGraph cards when a page has no image of its own.
+  # TODO: replace with a purpose-built 1200x630 card; profile.jpg is only 480x480.
+  images = ["/images/profile.jpg"]
   showReadingTime = true
   showWordCount = true
   ShowBreadCrumbs = true
@@ -13,6 +17,13 @@ enableRobotsTXT = true
   ShowShareButtons = false
   ShowPostNavLinks = true
   ShowFullTextinRSS = true
+
+  [params.schema]
+    publisherType = "Person"
+    name = "James Huang"
+
+  [params.social]
+    twitter = "jamestuffdemon"
 
   [params.profileMode]
     enabled = true

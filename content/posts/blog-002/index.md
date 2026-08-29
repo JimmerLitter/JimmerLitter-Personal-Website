@@ -2,6 +2,8 @@
 title: "FOC"
 date: 2026-08-25
 draft: false
+slug: "field-oriented-control-foc-bldc"
+aliases: ["/posts/blog-002/"]
 showToc: true
 TocOpen: false
 tags: ["motors", "electronics", "engineering"]
@@ -9,7 +11,7 @@ categories: ["blog"]
 description: "A quick, chill rundown of field oriented control (FOC): current sensing, the Clarke and Park transforms, and closing the torque loop on a BLDC motor."
 ---
 
-Field oriented control is one of the predominant ways to maximize torque out of your BLDC motor. Here's what I learned:
+Field oriented control is one of the predominant ways to maximize torque out of your [BLDC motor]({{< relref "blog-001" >}}). Here's what I learned:
 
 Inputs to the control loop are obtained from each inverter stage. The inverters set a voltage that the motor coils respond to, and the response is sensed by shunts placed below each inverter stage's lower leg. This results in 3 currents (Ia, Ib, Ic). The voltage across the shunts is measured and sent to the MCU to be discretized, transformed, and controlled.
 

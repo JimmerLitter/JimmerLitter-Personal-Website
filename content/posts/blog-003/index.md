@@ -2,6 +2,8 @@
 title: "Compounding Effects of Tolerances in a Cycloidal Gearbox"
 date: 2026-08-26
 draft: false
+slug: "cycloidal-gearbox-3d-printing-tolerances"
+aliases: ["/posts/blog-003/"]
 showToc: false
 TocOpen: false
 tags: ["gears", "3d printing", "mechanical", "engineering"]
@@ -25,7 +27,7 @@ The final assembly also took much persuasion, probably due to all the accumulati
 
 What I constantly grappled with was how tight I wanted the fit to be. Too tight and I spend so long getting it to fit; too loose and I lose time anyway trying to get things to stay where they are. I suppose all that extra time should be spent printing an assortment of pieces in increasing size and pinpointing the exact size of the best piece possible in increments of fractions of a millimeter, maybe less. Therefore, with all I learned, it'll definitely be a lot easier in a second iteration. But I was definitely discouraged from doing so since I didn't want someone to snatch away the community 3D printer if I was away for 5 minutes doing some quick sizing. The hours were also pretty shit. Pictures will be on my GitHub.
 
-I can't even imagine doing this at scale with thousands of parts and integrating with motors. There really are levels to this. But it's only a matter of time until I get there.
+I can't even imagine doing this at scale with thousands of parts and integrating with [motors]({{< relref "blog-002" >}}). There really are levels to this. But it's only a matter of time until I get there.
 
 TLDR:
 
